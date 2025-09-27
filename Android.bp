@@ -1,0 +1,91 @@
+android_app_import {
+    name: "TrichromeLibrary",
+
+    product_specific: true,
+
+    dex_preopt: {
+        enabled: false,
+    },
+    arch: {
+        arm64: {
+            apk: "prebuilt/arm64/TrichromeLibrary.apk",
+        },
+        x86_64: {
+            apk: "prebuilt/x86_64/TrichromeLibrary.apk",
+        },
+    },
+    preprocessed: true,
+}
+
+android_app_import {
+    name: "TrichromeWebView",
+
+    product_specific: true,
+
+    required: [
+        "libwebviewchromium_loader",
+        "libwebviewchromium_plat_support",
+        "TrichromeLibrary",
+        "VanadiumConfig",
+    ],
+
+    // Dexpreopt is unavailable due to the Class Loader Context mismatch caused by
+    // not yet having a way to reference TrichromeLibrary at build time.
+    //
+    // https://source.android.com/devices/tech/dalvik/art-class-loader-context
+    dex_preopt: {
+        enabled: false,
+    },
+    arch: {
+        arm64: {
+            apk: "prebuilt/arm64/TrichromeWebView.apk",
+        },
+        x86_64: {
+            apk: "prebuilt/x86_64/TrichromeWebView.apk",
+        },
+    },
+    preprocessed: true,
+}
+
+android_app_import {
+    name: "TrichromeChrome",
+
+    product_specific: true,
+
+    required: [
+        "TrichromeLibrary",
+        "VanadiumConfig",
+    ],
+
+    // Dexpreopt is unavailable due to the Class Loader Context mismatch caused by
+    // not yet having a way to reference TrichromeLibrary at build time.
+    //
+    // https://source.android.com/devices/tech/dalvik/art-class-loader-context
+    dex_preopt: {
+        enabled: false,
+    },
+    arch: {
+        arm64: {
+            apk: "prebuilt/arm64/TrichromeChrome.apk",
+        },
+        x86_64: {
+            apk: "prebuilt/x86_64/TrichromeChrome.apk",
+        },
+    },
+    preprocessed: true,
+}
+
+android_app_import {
+    name: "VanadiumConfig",
+
+    product_specific: true,
+
+    // Dexpreopt not needed for apps without java code.
+    dex_preopt: {
+        enabled: false,
+    },
+
+    apk: "prebuilt/VanadiumConfig.apk",
+
+    preprocessed: true,
+}
